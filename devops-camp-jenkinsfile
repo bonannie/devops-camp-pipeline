@@ -25,10 +25,10 @@ pipeline {
         stage('Application docker build') {
             steps {
                 echo "Building application image"
-                withCredentials([usernameColonPassword(credentialsId: 'student06', variable: 'HARBOR-AUTH')]) {
+                withCredentials([usernameColonPassword(credentialsId: 'achung--harbot-auth', variable: 'HARBOR-AUTH')]) {
                     script {
                         docker.build('$APP_IMAGE_NAME-$APP_HASH', '-f ./app/Dockerfile ./afs-labs-student')
-                        docker.withRegistry('https://$HARBOR_REGISTRY', 'student06') {
+                        docker.withRegistry('https://$HARBOR_REGISTRY', 'achung--harbot-auth') {
                             sh 'docker tag $APP_IMAGE_NAME-$APP_HASH $HARBOR_REGISTRY/$HARBOR_PROJECT/$APP_IMAGE_NAME:$APP_HASH-$PIPELINE_HASH'
                             sh 'docker push $HARBOR_REGISTRY/$HARBOR_PROJECT/$APP_IMAGE_NAME:$APP_HASH-$PIPELINE_HASH'
                         }
